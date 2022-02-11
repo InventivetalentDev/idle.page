@@ -1,0 +1,118 @@
+const API = "/api";
+const container = document.getElementsByClassName("c")[0];
+const wrapper = document.getElementsByClassName("t")[0];
+const days = document.getElementById("d");
+const hours = document.getElementById("h");
+const minutes = document.getElementById("m");
+const seconds = document.getElementById("s");
+const millis = document.getElementById("ms");
+
+let state = {t: 0, l: Math.floor(Date.now() / 1000), s: 0, m: 0, h: 0, d: 0};
+
+async function init() {
+    state = Object.assign({}, state, getState());
+    if (state == null || !state.l) {
+        state = Object.assign({}, state, await createNew());
+    }
+    console.log(state);
+    saveState();
+
+    updateDisplay();
+
+    setTimeout(() => startTicking(), Math.random() * 100);
+
+    container.classList.add("rdy");
+}
+
+function getState() {
+    const s = localStorage.getItem("page");
+    if (s == null || typeof state === "undefined" || s.length < 2) {
+        return null;
+    }
+    return JSON.parse(s);
+}
+
+function saveState() {
+    localStorage.setItem("page", JSON.stringify(state));
+}
+
+function createNew() {
+    return fetch(API + "/new", {method: "GET", credentials: "same-origin"})
+        .then(res => res.json())
+        .then(res => {
+            console.log("[new]", res);
+            return res;
+        })
+}
+
+function startTicking() {
+    const next = state.l + 60;
+    const wait = Math.max(0, next - Math.floor(Date.now() / 1000));
+    console.log("waiting " + wait + "s for first tick");
+    state.s = 60 - wait;
+    setTimeout(() => {
+        tick().then(() => {
+            setInterval(() => tick(), 1000 * 60 + (Math.random() * 10));
+        });
+    }, wait * 1000);
+    setInterval(() => tickSecond(), 1000);
+    setInterval(() => tickMillis(), 12);
+}
+
+function tick() {
+    return fetch(API + "/tick/" + state.n + "/" + state.k, {method: "POST", credentials: "same-origin"})
+        .then(res => res.json())
+        .then(res => {
+            console.log("[tick]", res);
+            state = Object.assign({}, state, res);
+            updateDisplay();
+            saveState();
+        });
+}
+
+function tickSecond() {
+    state.s = (state.s || 0) + 1;
+    if (state.s >= 60) {
+        state.s = 0;
+        state.t++;
+    }
+
+    state.m = state.t % 60;
+    state.h = Math.floor(state.t / 60) % 60;
+    state.d = Math.floor(state.t / 60 / 24);
+
+
+    updateDisplay();
+}
+
+function tickMillis() {
+    state.ms = (state.ms || 0) + 12;
+    if (state.ms >= 1000) {
+        state.ms = 0;
+    }
+    millis.innerText = pad(`${ state.ms }`, 3);
+}
+
+function updateDisplay() {
+    if (state.h > 0) {
+        wrapper.classList.add("h");
+    }
+    if (state.d > 0) {
+        wrapper.classList.add("d");
+    }
+
+    days.innerText = `${ state.d }`;
+    hours.innerText = pad(`${ state.h }`, 2);
+    minutes.innerText = pad(`${ state.m }`, 2);
+    seconds.innerText = pad(`${ state.s }`, 2);
+    millis.innerText = pad(`${ state.ms }`, 3);
+}
+
+function pad(s, l) {
+    while (s.length < l) {
+        s = "0" + s;
+    }
+    return s;
+}
+
+setTimeout(() => init(), Math.random() * 50);
