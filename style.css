@@ -136,3 +136,18 @@ body {
 .t.d > #d {
     display: initial; /*show days with d class*/
 }
+
+.a {
+    bottom: 5px;
+    position: absolute;
+    width: 100%;
+    font-size: 1.6vmin;
+}
+
+.a a {
+    color: #08bed5;
+}
+
+a {
+    text-decoration: none;
+}
