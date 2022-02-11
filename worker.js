@@ -27,6 +27,12 @@ async function handleRequest(request) {
         })
     }
 
+    const headers = {
+        "Access-Control-Allow-Origin": allowedOrigin,
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=60"
+    }
+
     if (request.method === "GET" && pathname.startsWith("/api/new")) {
         const id = (Math.random() + 1).toString(36).substring(2);
         const key = crypto.randomUUID().replace(/-/g, '');
@@ -34,11 +40,9 @@ async function handleRequest(request) {
         const data = {n: id, k: key};
         await IDLEPAGE.put(id + ":" + key + ":data", JSON.stringify({t: 0, l: (Math.floor(Date.now() / 1000)), s: secret}), {expirationTtl: ONE_MONTH, metadata: {t: 0}});
         return new Response(JSON.stringify(data), {
-            headers: {
-                "Access-Control-Allow-Origin": allowedOrigin,
-                "Content-Type": "application/json",
+            headers: Object.assign({}, headers, {
                 "Set-Cookie": "page=" + secret + "; Domain=idle.page; Path=/; Max-Age=" + ONE_MONTH + "; Secure; HttpOnly; SameSite=Strict"
-            },
+            })
 
         });
     }
@@ -54,10 +58,7 @@ async function handleRequest(request) {
         if (rawdata === null) {
             return new Response(JSON.stringify({"e": "invalid"}), {
                 status: 400,
-                headers: {
-                    "Access-Control-Allow-Origin": allowedOrigin,
-                    "Content-Type": "application/json"
-                },
+                headers: headers
             });
         }
         const data = JSON.parse(rawdata);
@@ -65,19 +66,13 @@ async function handleRequest(request) {
         if (cookie !== data.s) {
             return new Response(JSON.stringify({e: "invalid"}), {
                 status: 403,
-                headers: {
-                    "Access-Control-Allow-Origin": allowedOrigin,
-                    "Content-Type": "application/json"
-                },
+                headers: headers
             });
         }
         if (now - data.l < 60) {
             return new Response(JSON.stringify({e: "too soon"}), {
                 status: 429,
-                headers: {
-                    "Access-Control-Allow-Origin": allowedOrigin,
-                    "Content-Type": "application/json"
-                },
+                headers: headers
             });
         }
 
@@ -88,20 +83,15 @@ async function handleRequest(request) {
         delete data.s;
 
         return new Response(JSON.stringify(data), {
-            headers: {
-                "Access-Control-Allow-Origin": allowedOrigin,
-                "Content-Type": "application/json",
+            headers: Object.assign({}, headers, {
                 "Set-Cookie": "page=" + secret + "; Domain=idle.page; Path=/; Max-Age=" + ONE_MONTH + "; Secure; HttpOnly; SameSite=Strict"
-            },
+            })
         });
     }
 
     return new Response(JSON.stringify({e: "not found"}), {
         status: 404,
-        headers: {
-            "Access-Control-Allow-Origin": allowedOrigin,
-            "Content-Type": "application/json"
-        },
+        headers: headers
     });
 }
 
