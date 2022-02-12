@@ -8,6 +8,7 @@ const seconds = document.getElementById("s");
 const millis = document.getElementById("ms");
 
 let state = {t: 0, l: Math.floor(Date.now() / 1000), s: 0, m: 0, h: 0, d: 0};
+let firstTick = true;
 
 async function init() {
     state = Object.assign({}, state, getState());
@@ -77,12 +78,29 @@ function tickSecond() {
         state.t++;
     }
 
+    const oldM = state.m;
+    const oldH = state.h;
+    const oldD = state.d;
+
     state.m = state.t % 60;
     state.h = Math.floor(state.t / 60) % 60;
     state.d = Math.floor(state.t / 60 / 24);
 
-
     updateDisplay();
+
+    if (!firstTick) { // don't spawn orbs when it's the first update after loading
+        if (state.m > oldM) {
+            spawnOrb('+1', minutes);
+        }
+        if (state.h > oldH) {
+            spawnOrb('+1', hours);
+        }
+        if (state.d > oldD) {
+            spawnOrb('+1', days);
+        }
+    }
+
+    firstTick = false;
 }
 
 function tickMillis() {
@@ -94,6 +112,8 @@ function tickMillis() {
 }
 
 function updateDisplay() {
+
+
     if (state.h > 0) {
         wrapper.classList.add("h");
     }
@@ -106,6 +126,20 @@ function updateDisplay() {
     minutes.innerText = pad(`${ state.m }`, 2);
     seconds.innerText = pad(`${ state.s }`, 2);
     millis.innerText = pad(`${ state.ms }`, 3);
+}
+
+function spawnOrb(content, el) {
+    const orb = document.createElement("div");
+    orb.innerText = content;
+    orb.classList.add("o");
+    const left = (el.offsetLeft + el.offsetWidth / 2) + ((Math.random() * el.offsetWidth / 2) - (Math.random() * el.offsetWidth / 2));
+    orb.style.top = (el.offsetTop + el.offsetHeight / 4) + 'px';
+    orb.style.left = left + 'px';
+    orb.classList.add("a");
+    document.body.prepend(orb);
+    setTimeout(() => {
+        document.body.removeChild(orb);
+    }, 10000);
 }
 
 function pad(s, l) {
