@@ -13,6 +13,7 @@ let firstTick = true;
 async function init() {
     state = Object.assign({}, state, getState());
     if (state == null || !state.l) {
+        backupState();
         state = Object.assign({}, state, await createNew());
     }
     console.log(state);
@@ -37,12 +38,20 @@ function saveState() {
     localStorage.setItem("page", JSON.stringify(state));
 }
 
+function backupState() {
+    const date = new Date();
+    localStorage.setItem("page__" + date.getFullYear() + "_" + date.getMonth() + "_" + date.getDate() + "__" + Math.round(Math.random() * 500 + Math.random() * 500), localStorage.getItem("page"));
+}
+
 function createNew() {
-    return fetch(API + "/new", {method: "GET", credentials: "same-origin"})
+    return fetch(API + "/new/" + Math.floor(Date.now() / 1000 / 60).toString(36), {method: "GET", credentials: "same-origin"})
         .then(res => res.json())
         .then(res => {
             console.log("[new]", res);
             return res;
+        })
+        .catch(err => {
+            console.error("[new]", err);
         })
 }
 
@@ -65,10 +74,23 @@ function tick() {
         .then(res => res.json())
         .then(res => {
             console.log("[tick]", res);
+
+            if (res.e === 3) { // invalid session
+                console.warn("[tick] invalid session");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 100);
+                return;
+            }
+
+
             state = Object.assign({}, state, res);
             updateDisplay();
             saveState();
-        });
+        })
+        .catch(err => {
+            console.error("[tick]", err);
+        })
 }
 
 function tickSecond() {
