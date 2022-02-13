@@ -164,6 +164,30 @@ function spawnOrb(content, el) {
     }, 10000);
 }
 
+function loadLeaderboard() {
+    return fetch(API + "/leaderboard")
+        .then(res => res.json())
+        .then(lb => {
+            const board = document.getElementById("l");
+            board.innerText = '';
+            for (let i = 0; i < lb.length; i++) {
+                const item = document.createElement('div');
+                board.append(item);
+                item.innerText = `#${ i + 1 } ${ lb[i].n } ${ lb[i].t }m`
+            }
+        })
+}
+
+document.querySelector('a.l').addEventListener('click', e => {
+    e.preventDefault();
+    loadLeaderboard().then(() => {
+        document.querySelector('div.l').classList.add('v');
+    })
+});
+document.addEventListener('click', e => {
+    document.querySelector('div.l').classList.remove('v');
+})
+
 function pad(s, l) {
     while (s.length < l) {
         s = "0" + s;

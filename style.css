@@ -137,6 +137,59 @@ body {
     display: initial; /*show days with d class*/
 }
 
+/** LEADERBOARD **/
+
+a.l {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+a.l > img {
+    width: auto;
+    height: max(1.6vmax, 20px);
+    filter: invert(1);
+}
+
+div.l {
+    display: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+div.l.v {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+div#l {
+    width: 55vw;
+    height: 70vh;
+    padding: 30px;
+
+    opacity: 0.8;
+    background-color: #222222;
+
+    font-size: max(3vmin, 16px);
+}
+
+@media (orientation: landscape) {
+    div#l {
+        width: 40vw;
+    }
+}
+
+@media (orientation: portrait) {
+    div#l {
+        width: 75vw;
+    }
+}
 
 /** ORB **/
 
@@ -200,7 +253,7 @@ footer .a {
     bottom: 5px;
     position: absolute;
     width: 100%;
-    font-size: 1.6vmin;
+    font-size: max(1.6vmin, 12px);
 }
 
 footer .a a {
