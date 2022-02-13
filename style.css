@@ -141,13 +141,13 @@ body {
 
 a.l {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 12px;
+    right: 12px;
 }
 
 a.l > img {
     width: auto;
-    height: max(1.6vmax, 20px);
+    height: min(4vmin, max(1.6vmax, 60px));
     filter: invert(1);
 }
 
@@ -177,6 +177,11 @@ div#l {
     background-color: #222222;
 
     font-size: max(3vmin, 16px);
+    font-weight: 300;
+}
+
+div#l .slf {
+    font-weight: 400;
 }
 
 @media (orientation: landscape) {
@@ -253,7 +258,7 @@ footer .a {
     bottom: 5px;
     position: absolute;
     width: 100%;
-    font-size: max(1.6vmin, 12px);
+    font-size: max(1.6vmin, 18px);
 }
 
 footer .a a {

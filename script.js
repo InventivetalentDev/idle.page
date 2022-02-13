@@ -173,6 +173,9 @@ function loadLeaderboard() {
             for (let i = 0; i < lb.length; i++) {
                 const item = document.createElement('div');
                 board.append(item);
+                if(lb[i].n === state.n) {
+                    item.classList.add("slf");
+                }
                 item.innerText = `#${ i + 1 } ${ lb[i].n } ${ lb[i].t }m`
             }
         })
