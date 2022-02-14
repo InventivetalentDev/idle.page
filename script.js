@@ -12,7 +12,7 @@ let firstTick = true;
 
 async function init() {
     state = Object.assign({}, state, getState());
-    if (state == null || !state.l) {
+    if (state == null || !state.l || !state.n || !state.k) {
         backupState();
         state = Object.assign({}, state, await createNew());
     }
@@ -75,14 +75,15 @@ function tick() {
         .then(res => {
             console.log("[tick]", res);
 
-            if (res.e === 3) { // invalid session
+            if (res.e === 1 || res.e === 3) { // invalid session
                 console.warn("[tick] invalid session");
+                backupState();
                 setTimeout(() => {
+                    localStorage.removeItem("page");
                     window.location.reload();
-                }, 100);
+                }, 1000);
                 return;
             }
-
 
             state = Object.assign({}, state, res);
             updateDisplay();
@@ -174,7 +175,7 @@ function loadLeaderboard() {
             for (let i = 0; i < lb.length; i++) {
                 const item = document.createElement('div');
                 board.append(item);
-                if(lb[i].n === state.n) {
+                if (lb[i].n === state.n) {
                     item.classList.add("slf");
                     foundSelf = true;
                 }
