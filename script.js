@@ -180,23 +180,33 @@ function loadLeaderboard() {
             const board = document.getElementById("l");
             board.innerText = '';
             let foundSelf = false;
+            for (let item of lb) {
+                if (item.n === state.n) {
+                    foundSelf = true;
+                    item.t = state.t;
+                    break;
+                }
+            }
+            if (!foundSelf) {
+                lb.push({
+                    n: state.n,
+                    k: state.k,
+                    t: state.t,
+                    a: state.a || state.n || 'you'
+                })
+            }
+            lb.sort((a, b) => {
+                return b.t - a.t;
+            })
             for (let i = 0; i < lb.length; i++) {
                 const item = document.createElement('div');
                 board.append(item);
                 if (lb[i].n === state.n) {
                     item.classList.add("slf");
                     item.setAttribute('title', 'you!');
-                    foundSelf = true;
                     lb[i].t = state.t;
                 }
-                item.innerText = `#${ i + 1 } ${ lb[i].a || lb[i].n } ${ lb[i].t }m`
-            }
-            if (!foundSelf) {
-                const item = document.createElement('div');
-                board.append(item);
-                item.classList.add("slf");
-                item.setAttribute('title', 'you!');
-                item.innerText = `#${ lb.length + 1 } ${ state.a || state.n || 'you' } ${ state.t }m`
+                item.innerText = `#${ i + 1 } ${ lb[i].a || lb[i].n } ${ lb[i].t }m`;
             }
         })
 }

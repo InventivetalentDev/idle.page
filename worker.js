@@ -178,7 +178,7 @@ async function triggerEvent(scheduledTime) {
         })
     }
     filtered.sort((a, b) => {
-        return b.t - b.t;
+        return b.t - a.t;
     });
     console.log(filtered)
 
