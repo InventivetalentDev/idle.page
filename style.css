@@ -1,17 +1,23 @@
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: black;
-        --clr: white;
-        --shadow: 2px; /*bigger glow in darkmode looks cool, but kinda weird in light*/
-    }
-}
+/*@media (prefers-color-scheme: dark) {*/
+/*    :root {*/
+/*        --bg: black;*/
+/*        --clr: white;*/
+/*        --shadow: 2px; !*bigger glow in darkmode looks cool, but kinda weird in light*!*/
+/*    }*/
+/*}*/
 
-@media (prefers-color-scheme: light) {
-    :root {
-        --bg: white;
-        --clr: black;
-        --shadow: 1px;
-    }
+/*@media (prefers-color-scheme: light) {*/
+/*    :root {*/
+/*        --bg: white;*/
+/*        --clr: black;*/
+/*        --shadow: 1px;*/
+/*    }*/
+/*}*/
+
+:root {
+    --bg: black;
+    --clr: white;
+    --shadow: 2px;
 }
 
 html, body, main {
