@@ -177,9 +177,12 @@ async function triggerEvent(scheduledTime) {
             a: v.a || makeAlias()
         })
     }
+    filtered.sort((a, b) => {
+        return b.t - b.t;
+    });
     console.log(filtered)
 
-    await IDLEPAGE.put("leaderboard", JSON.stringify(filtered));
+    await IDLEPAGE.put("leaderboard", JSON.stringify(filtered.slice(0, 15)));
 
     console.log("cron processed")
     console.log(Date.now() - start);
