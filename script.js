@@ -11,12 +11,14 @@ let state = {t: 0, l: Math.floor(Date.now() / 1000), s: 0, m: 0, h: 0, d: 0};
 let firstTick = true;
 
 async function init() {
+    console.log("hi! 👋");
+
     state = Object.assign({}, state, getState());
     if (state == null || !state.l || !state.n || !state.k) {
         backupState();
         state = Object.assign({}, state, await createNew());
     }
-    console.log(state);
+    console.debug(state);
     saveState();
 
     updateDisplay();
@@ -47,7 +49,7 @@ function createNew() {
     return fetch(API + "/new/" + Math.floor(Date.now() / 1000 / 60).toString(36), {method: "GET", credentials: "same-origin"})
         .then(res => res.json())
         .then(res => {
-            console.log("[new]", res);
+            console.debug("[new]", res);
             return res;
         })
         .catch(err => {
@@ -58,7 +60,7 @@ function createNew() {
 function startTicking() {
     const next = state.l + 60;
     const wait = Math.max(0, next - Math.floor(Date.now() / 1000));
-    console.log("waiting " + wait + "s for first tick");
+    console.debug("waiting " + wait + "s for first tick");
     state.s = 60 - wait;
     setTimeout(() => {
         tick().then(() => {
@@ -73,7 +75,7 @@ function tick() {
     return fetch(API + "/tick/" + state.n + "/" + state.k, {method: "POST", credentials: "same-origin"})
         .then(res => res.json())
         .then(res => {
-            console.log("[tick]", res);
+            console.debug("[tick]", res);
 
             if (res.e === 1 || res.e === 3) { // invalid session
                 console.warn("[tick] invalid session");
