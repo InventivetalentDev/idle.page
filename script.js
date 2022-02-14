@@ -187,6 +187,7 @@ function loadLeaderboard() {
                     item.classList.add("slf");
                     item.setAttribute('title', 'you!');
                     foundSelf = true;
+                    lb[i].t = state.t;
                 }
                 item.innerText = `#${ i + 1 } ${ lb[i].a || lb[i].n } ${ lb[i].t }m`
             }
