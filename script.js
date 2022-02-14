@@ -183,7 +183,7 @@ function loadLeaderboard() {
             if (!foundSelf) {
                 const item = document.createElement('div');
                 board.append(item);
-                item.innerText = `#${ lb.length + 1 } ${ state.n } ${ state.t }m`
+                item.innerText = `#${ lb.length + 1 } ${ state.n || 'you' } ${ state.t }m`
             }
         })
 }
