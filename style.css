@@ -147,7 +147,7 @@ a.l {
 
 a.l > img {
     width: auto;
-    height: min(4vmin, max(1.6vmax, 60px));
+    height: min(4vmin, max(1.6vmax, 40px));
     filter: invert(1);
 }
 

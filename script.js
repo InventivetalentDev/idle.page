@@ -177,6 +177,7 @@ function loadLeaderboard() {
                 board.append(item);
                 if (lb[i].n === state.n) {
                     item.classList.add("slf");
+                    item.setAttribute('title', 'you!');
                     foundSelf = true;
                 }
                 item.innerText = `#${ i + 1 } ${ lb[i].n } ${ lb[i].t }m`
@@ -184,6 +185,8 @@ function loadLeaderboard() {
             if (!foundSelf) {
                 const item = document.createElement('div');
                 board.append(item);
+                item.classList.add("slf");
+                item.setAttribute('title', 'you!');
                 item.innerText = `#${ lb.length + 1 } ${ state.n || 'you' } ${ state.t }m`
             }
         })
