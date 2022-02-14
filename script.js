@@ -188,14 +188,14 @@ function loadLeaderboard() {
                     item.setAttribute('title', 'you!');
                     foundSelf = true;
                 }
-                item.innerText = `#${ i + 1 } ${ lb[i].n } ${ lb[i].t }m`
+                item.innerText = `#${ i + 1 } ${ lb[i].a || lb[i].n } ${ lb[i].t }m`
             }
             if (!foundSelf) {
                 const item = document.createElement('div');
                 board.append(item);
                 item.classList.add("slf");
                 item.setAttribute('title', 'you!');
-                item.innerText = `#${ lb.length + 1 } ${ state.n || 'you' } ${ state.t }m`
+                item.innerText = `#${ lb.length + 1 } ${ state.a || state.n || 'you' } ${ state.t }m`
             }
         })
 }
