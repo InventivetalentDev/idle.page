@@ -118,10 +118,18 @@ function tickSecond() {
             spawnOrb('+1', minutes);
         }
         if (state.h > oldH) {
-            spawnOrb('+1', hours);
+            if (state.h === 1) {
+                spawnOrb('😴', hours);
+            } else {
+                spawnOrb('+1', hours);
+            }
         }
         if (state.d > oldD) {
-            spawnOrb('+1', days);
+            if (state.d === 100) {
+                spawnOrb('💯', days);
+            } else {
+                spawnOrb('+1', days);
+            }
         }
     }
 
@@ -137,8 +145,6 @@ function tickMillis() {
 }
 
 function updateDisplay() {
-
-
     if (state.h > 0) {
         wrapper.classList.add("h");
     }
