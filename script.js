@@ -170,13 +170,20 @@ function loadLeaderboard() {
         .then(lb => {
             const board = document.getElementById("l");
             board.innerText = '';
+            let foundSelf = false;
             for (let i = 0; i < lb.length; i++) {
                 const item = document.createElement('div');
                 board.append(item);
                 if(lb[i].n === state.n) {
                     item.classList.add("slf");
+                    foundSelf = true;
                 }
                 item.innerText = `#${ i + 1 } ${ lb[i].n } ${ lb[i].t }m`
+            }
+            if (!foundSelf) {
+                const item = document.createElement('div');
+                board.append(item);
+                item.innerText = `#${ lb.length + 1 } ${ state.n } ${ state.t }m`
             }
         })
 }
