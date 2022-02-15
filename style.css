@@ -186,6 +186,10 @@ div#l {
     font-weight: 300;
 }
 
+div#l > div {
+    filter: drop-shadow(0px 0px 2px black);
+}
+
 div#l .slf {
     font-weight: 400;
 }
