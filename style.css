@@ -202,7 +202,8 @@ div#l .slf {
 
 @media (orientation: portrait) {
     div#l {
-        width: 75vw;
+        width: 90vw;
+        padding: 10px;
     }
 }
 
