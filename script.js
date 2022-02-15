@@ -107,9 +107,9 @@ function tickSecond() {
     const oldH = state.h;
     const oldD = state.d;
 
-    state.m = state.t % 60;
-    state.h = Math.floor(state.t / 60) % 60;
-    state.d = Math.floor(state.t / 60 / 24);
+    state.m = Math.floor(state.t) % 60;
+    state.h = Math.floor(state.t / 60) % 24;
+    state.d = Math.floor(t / (24 * 60));
 
     updateDisplay();
 
@@ -222,9 +222,9 @@ document.addEventListener('click', e => {
 })
 
 function formatMinutes(t) {
-    const m = t % 60;
-    const h = Math.floor(t / 60) % 60;
-    const d = Math.floor(t / 60 / 24);
+    const m = Math.floor(t) % 60;
+    const h = Math.floor(t / 60) % 24;
+    const d = Math.floor(t / (24 * 60));
 
     let str = `${ m }m`;
     if (h > 0 || d > 0) {
