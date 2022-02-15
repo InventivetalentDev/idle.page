@@ -54,7 +54,7 @@ async function handleRequest(request) {
         const data = await IDLEPAGE.get("leaderboard");
         return new Response(data, {
             headers: Object.assign({}, headers, {
-                "Cache-Control": "public, max-age=900"
+                "Cache-Control": "public, max-age=1800"
             })
         });
     }
