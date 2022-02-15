@@ -32,7 +32,7 @@ async function handleRequest(request) {
     const headers = {
         "Access-Control-Allow-Origin": allowedOrigin,
         "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=59"
+        "Cache-Control": "public, max-age=55"
     }
 
     if (request.method === "GET" && pathname.startsWith("/api/new")) {
@@ -44,7 +44,8 @@ async function handleRequest(request) {
         await IDLEPAGE.put("data:" + id + ":" + key, JSON.stringify({t: 0, l: (Math.floor(Date.now() / 1000)), s: secret, a: alias}), {expirationTtl: ONE_MONTH, metadata: {t: 0}});
         return new Response(JSON.stringify(data), {
             headers: Object.assign({}, headers, {
-                "Set-Cookie": "page=" + secret + "; Domain=idle.page; Path=/; Max-Age=" + ONE_MONTH + "; Secure; HttpOnly; SameSite=Strict"
+                "Set-Cookie": "page=" + secret + "; Domain=idle.page; Path=/; Max-Age=" + ONE_MONTH + "; Secure; HttpOnly; SameSite=Strict",
+                "Cache-Control": "public, max-age=120"
             })
 
         });
