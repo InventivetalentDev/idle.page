@@ -206,7 +206,7 @@ function loadLeaderboard() {
                     item.setAttribute('title', 'you!');
                     lb[i].t = state.t;
                 }
-                item.innerText = `#${ i + 1 } ${ lb[i].a || lb[i].n } ${ lb[i].t }m`;
+                item.innerText = `#${ i + 1 } ${ lb[i].a || lb[i].n } ${ formatMinutes(lb[i].t) }m`;
             }
         })
 }
@@ -220,6 +220,21 @@ document.querySelector('a.l').addEventListener('click', e => {
 document.addEventListener('click', e => {
     document.querySelector('div.l').classList.remove('v');
 })
+
+function formatMinutes(t) {
+    const m = t % 60;
+    const h = Math.floor(t / 60) % 60;
+    const d = Math.floor(t / 60 / 24);
+
+    let str = `${ m }m`;
+    if (h > 0 || d > 0) {
+        str = `${ h }h` + str;
+        if (d > 0) {
+            str = `${ d }d` + str;
+        }
+    }
+    return str;
+}
 
 function pad(s, l) {
     while (s.length < l) {
