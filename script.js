@@ -206,7 +206,7 @@ function loadLeaderboard() {
                     item.setAttribute('title', 'you!');
                     lb[i].t = state.t;
                 }
-                item.innerText = `#${ i + 1 } ${ lb[i].a || lb[i].n } ${ formatMinutes(lb[i].t) }m`;
+                item.innerText = `#${ i + 1 } ${ lb[i].a || lb[i].n } ${ formatMinutes(lb[i].t) }`;
             }
         })
 }
