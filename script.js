@@ -188,6 +188,7 @@ function loadLeaderboard() {
                 }
             }
             if (!foundSelf) {
+                lb.pop();
                 lb.push({
                     n: state.n,
                     k: state.k,
