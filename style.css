@@ -184,6 +184,9 @@ div#l {
 
     font-size: max(2.5vmin, 16px);
     font-weight: 300;
+
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 div#l > div {
