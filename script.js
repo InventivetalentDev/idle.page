@@ -109,7 +109,7 @@ function tickSecond() {
 
     state.m = Math.floor(state.t) % 60;
     state.h = Math.floor(state.t / 60) % 24;
-    state.d = Math.floor(t / (24 * 60));
+    state.d = Math.floor(state.t / (24 * 60));
 
     updateDisplay();
 
