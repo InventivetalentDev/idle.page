@@ -182,7 +182,7 @@ async function triggerEvent(scheduledTime) {
     });
     console.log(filtered)
 
-    await IDLEPAGE.put("leaderboard", JSON.stringify(filtered.slice(0, 15)));
+    await IDLEPAGE.put("leaderboard", JSON.stringify(filtered.slice(0, 20)));
 
     console.log("cron processed")
     console.log(Date.now() - start);
