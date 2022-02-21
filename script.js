@@ -211,7 +211,7 @@ function loadLeaderboard() {
                     lb[i].t = state.t;
 
                     const share = document.createElement('a');
-                    share.setAttribute('href', `https://twitter.com/share?url=https://idle.page&text=I've been here for ${ duration }! - ${ alias }`);
+                    share.setAttribute('href', `https://twitter.com/share?url=https%3A%2F%2Fidle.page&text=I%27ve%20been%20here%20for%20${ duration }!%20%0a-realistic%20yawning%20signal%0a`)
                     share.setAttribute('target', '_blank');
                     share.innerText = text;
                     item.append(share);
