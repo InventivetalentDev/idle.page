@@ -202,12 +202,22 @@ function loadLeaderboard() {
             for (let i = 0; i < lb.length; i++) {
                 const item = document.createElement('div');
                 board.append(item);
+                const duration = formatMinutes(lb[i].t);
+                const alias = lb[i].a || lb[i].n;
+                const text = `#${ i + 1 } ${ alias } ${ duration }`;
                 if (lb[i].n === state.n) {
                     item.classList.add("slf");
                     item.setAttribute('title', 'you!');
                     lb[i].t = state.t;
+
+                    const share = document.createElement('a');
+                    share.setAttribute('href', `https://twitter.com/share?url=https://idle.page&text=I've been here for ${ duration }! - ${ alias }`);
+                    share.setAttribute('target', '_blank');
+                    share.innerText = text;
+                    item.append(share);
+                } else {
+                    item.innerText = `#${ i + 1 } ${ lb[i].a || lb[i].n } ${ formatMinutes(lb[i].t) }`;
                 }
-                item.innerText = `#${ i + 1 } ${ lb[i].a || lb[i].n } ${ formatMinutes(lb[i].t) }`;
             }
         })
 }
