@@ -64,9 +64,9 @@ function startTicking() {
     state.s = 60 - wait;
     setTimeout(() => {
         tick().then(() => {
-            setInterval(() => tick(), 1000 * 60 + (Math.random() * 100));
+            setInterval(() => tick(), 1000 * 60);
         });
-    }, wait * 1000);
+    }, wait * 1000 + (Math.random() * 1000));
     setInterval(() => tickSecond(), 1000);
     setInterval(() => tickMillis(), 12);
 }
